@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AETHER</title>
+</head>
+<body>
+<h1>AETHER Dashboard</h1>
+<div id="status">
+  <em>Loading backend status...</em>
+</div>
+
+<script>
+fetch('http://localhost:3000/status')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('status').innerHTML = `
+      <strong>Service:</strong> ${data.service}<br>
+      <strong>Status:</strong> ${data.status}<br>
+      <strong>Timestamp:</strong> ${data.time}
+    `;
+  })
+  .catch(error => {
+    document.getElementById('status').innerHTML = `<span style='color: red;'>Failed to fetch backend status.</span>`;
+  });
+</script>
+
+</body>
+</html>
