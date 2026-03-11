@@ -6,7 +6,7 @@ import { publishActionCandidate } from './publishers/actionCandidatePublisher';
 
 export function startDecisionPipeline(bus: EventBus): void {
   bus.subscribe(EVENT_TOPICS.INTELLIGENCE_SIGNAL, envelope => {
-    const signal = envelope.payload;
+    const signal = envelope.payload ?? envelope;
     const candidate = basicSignalEvaluator(signal);
     if (candidate) {
       publishActionCandidate(bus, candidate, 'decision', envelope.correlationId);

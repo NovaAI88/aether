@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { EventBus } from '../../src/events/eventBus.ts';
+import { EVENT_TOPICS } from '../../src/events/topics.ts';
 import { getMockRawPayload } from '../../src/ingestion/connectors/mockConnector.ts';
 import { adaptMockPayloadToMarketEvent } from '../../src/ingestion/adapters/mockAdapter.ts';
 import { publishMarketEvent } from '../../src/ingestion/publishers/marketEventPublisher.ts';
@@ -25,20 +26,34 @@ describe('Paper Trading Validation', () => {
     startRiskPipeline(bus);
     startExecutionPipeline(bus);
     startPortfolioPipeline(bus);
+    let processedStates = 0;
+    let tradeSignals = 0;
+    let actionCandidates = 0;
+    let riskDecisions = 0;
+    let receivedExecs = 0;
     let receivedPositions = 0;
     let receivedPortfolios = 0;
-    let receivedExecs = 0;
-    bus.subscribe('position.snapshot', snap => { receivedPositions++; });
-    bus.subscribe('portfolio.snapshot', snap => { receivedPortfolios++; });
-    bus.subscribe('execution.result', snap => { receivedExecs++; });
+    bus.subscribe(EVENT_TOPICS.PROCESSING_STATE, () => { processedStates++; });
+    bus.subscribe(EVENT_TOPICS.INTELLIGENCE_SIGNAL, () => { tradeSignals++; });
+    bus.subscribe(EVENT_TOPICS.DECISION_CANDIDATE, () => { actionCandidates++; });
+    bus.subscribe(EVENT_TOPICS.RISK_DECISION, () => { riskDecisions++; });
+    bus.subscribe(EVENT_TOPICS.EXECUTION_RESULT, () => { receivedExecs++; });
+    bus.subscribe(EVENT_TOPICS.POSITION_SNAPSHOT, () => { receivedPositions++; });
+    bus.subscribe(EVENT_TOPICS.PORTFOLIO_SNAPSHOT, () => { receivedPortfolios++; });
     FIXTURE_EVENTS.forEach(fixture => {
       const raw = { ...getMockRawPayload(), ...fixture };
       const evt = adaptMockPayloadToMarketEvent(raw);
       publishMarketEvent(bus, evt, 'fixture');
     });
     await new Promise(resolve => setTimeout(resolve, 250));
+    // Log all step counts
+    console.log({processedStates, tradeSignals, actionCandidates, riskDecisions, receivedExecs, receivedPositions, receivedPortfolios});
+    expect(processedStates).toBeGreaterThan(0);
+    expect(tradeSignals).toBeGreaterThan(0);
+    expect(actionCandidates).toBeGreaterThan(0);
+    expect(riskDecisions).toBeGreaterThan(0);
+    expect(receivedExecs).toBeGreaterThan(0);
     expect(receivedPositions).toBeGreaterThan(0);
     expect(receivedPortfolios).toBeGreaterThan(0);
-    expect(receivedExecs).toBeGreaterThan(0);
   });
 });

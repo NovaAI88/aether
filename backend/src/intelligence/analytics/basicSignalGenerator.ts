@@ -3,13 +3,18 @@ import { ProcessedMarketState } from '../../models/ProcessedMarketState';
 import { TradeSignal } from '../../models/TradeSignal';
 
 export function basicSignalGenerator(state: ProcessedMarketState): TradeSignal {
-  // Example rule: BUY if price < moving average
+  const signalType =
+    state.price < (state.movingAvg || state.price)
+      ? 'buy'
+      : state.price > (state.movingAvg || state.price)
+      ? 'sell'
+      : 'hold';
   return {
     source: 'basic-signal',
     symbol: state.symbol,
-    signalType: state.price < (state.movingAvg || state.price) ? 'buy' : 'hold',
+    signalType,
     confidence: 0.7,
-    rationale: 'Simple rule: price < movingAvg',
+    rationale: 'Simple rule: price vs movingAvg',
     timestamp: new Date().toISOString(),
     baseState: state
   };

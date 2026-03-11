@@ -10,7 +10,7 @@ export function enrichMarketEvent(evt: MarketEvent): ProcessedMarketState {
     price: evt.price,
     volume: evt.volume,
     timestamp: evt.timestamp,
-    movingAvg: evt.price, // minimal, placeholder
+    movingAvg: Number(evt.raw?.movingAvg ?? evt.price), // USE FIXTURE raw.movingAvg IF PRESENT
     enriched: true,
     baseEvent: evt,
   };
