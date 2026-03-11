@@ -1,0 +1,18 @@
+import express from 'express';
+import { getLatestPositionSnapshot } from '../portfolio/state/positionTracker';
+import { getLatestPortfolioSnapshot } from '../portfolio/state/portfolioTracker';
+const app = express();
+
+app.get('/api/ping', (req, res) => res.status(200).send('pong'));
+app.get('/api/status', (req, res) => res.status(200).json({status: 'ok', uptime: process.uptime(), timestamp: new Date().toISOString(), build: process.env.BUILD_HASH || 'dev'}));
+app.get('/api/position', (req, res) => {
+  const snap = getLatestPositionSnapshot();
+  if (snap) res.json(snap);
+  else res.status(404).json({error: 'No position snapshot available'});
+});
+app.get('/api/portfolio', (req, res) => {
+  const snap = getLatestPortfolioSnapshot();
+  if (snap) res.json(snap);
+  else res.status(404).json({error: 'No portfolio snapshot available'});
+});
+export default app;
