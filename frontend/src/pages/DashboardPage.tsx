@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import StatusCard from '../components/StatusCard';
 import PortfolioSummary from '../components/PortfolioSummary';
 import PositionTable from '../components/PositionTable';
+import ChartPanel from '../components/ChartPanel';
+import OrderBookStub from '../components/OrderBookStub';
+import TradeFlowStub from '../components/TradeFlowStub';
+import AlertPanel from '../components/AlertPanel';
 import { fetchStatus, fetchPortfolio, fetchPositions } from '../api/apiClient';
 
 const DashboardPage: React.FC = () => {
@@ -42,10 +46,15 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
         <div className="dashboard-sidecol">
-          <div className="ui-card ui-card-empty" style={{minHeight:96}}>(Market/Chart section placeholder)</div>
-          <div className="activity-section">
-            <span style={{fontWeight:600,letterSpacing:'0.5px',fontSize:'1.06rem'}}>Activity & System Log</span>
-            <div style={{color:'#838fa4',margin:'0.5rem 0'}}>No recent activity.</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div style={{ marginBottom: 8 }}>
+              <ChartPanel />
+            </div>
+            <div>
+              <OrderBookStub />
+              <TradeFlowStub />
+            </div>
+            <AlertPanel />
           </div>
         </div>
       </div>
