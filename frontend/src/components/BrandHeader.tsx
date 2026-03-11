@@ -1,15 +1,13 @@
 import React from 'react';
 
-const AETHER_LOGO = (
-  <svg height="38" viewBox="0 0 44 38" style={{marginRight: 12}}>
-    <defs>
-      <linearGradient id="aether-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#50b7f5"/>
-        <stop offset="100%" stopColor="#283fe6"/>
-      </linearGradient>
-    </defs>
-    <polygon points="22,3 43,19 22,35 1,19" style={{fill:'url(#aether-gradient)',stroke:'#80eaff',strokeWidth:2}} />
-    <circle cx="22" cy="19" r="5" fill="#283fe6" stroke="#80eaff" strokeWidth="2.25" />
+const AetherLogo = () => (
+  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginRight:18,filter:'drop-shadow(0 1px 8px #1e305350)'}}>
+    <g>
+      {/* Sharp custom stylized "A" geometric mark for AETHER */}
+      <polygon points="22,4 40,40 22,32 4,40" fill="#232d69" stroke="#49bfec" strokeWidth="2.2"/>
+      <polyline points="22,14 31,33 22,29 13,33 22,14" fill="none" stroke="#69d4ff" strokeWidth="2.4" strokeLinejoin="miter"/>
+      <circle cx="22" cy="20" r="2.6" fill="#49bfec" />
+    </g>
   </svg>
 );
 
@@ -17,34 +15,33 @@ const BrandHeader: React.FC = () => (
   <header style={{
     display: 'flex',
     alignItems: 'center',
-    background: 'linear-gradient(to right, #1a2332 60%, #192466 100%)',
+    background: 'linear-gradient(90deg,#101a2d 75%,#232d69 120%)',
     height: 62,
-    padding: '0 40px',
-    borderBottom: '1.5px solid #273652',
-    boxShadow: '0 2px 12px #01051a33',
-    letterSpacing: '0.05em',
-    zIndex: 20
+    padding: '0 44px',
+    borderBottom: '1.8px solid #24294b',
+    boxShadow: '0 2px 14px #02082436',
+    letterSpacing: '0.07em',
+    zIndex: 30,
+    overflow:'hidden',
   }}>
-    {AETHER_LOGO}
+    <AetherLogo />
     <span style={{
-      color: '#80eaff',
+      color: '#86e6ff',
       fontWeight: 800,
-      fontSize: '2rem',
+      fontSize: '2.17rem',
       fontFamily: 'Inter, Segoe UI, Arial',
-      textShadow: '0 3px 12px #1b364b77',
       textTransform: 'uppercase',
-      letterSpacing: '0.09em',
+      letterSpacing: '0.13em',
       userSelect: 'none',
-      marginRight: 12
+      marginRight: 8,
+      verticalAlign:'middle',
+      lineHeight:'110%'
     }}>
       AETHER
     </span>
-    <span style={{color: '#99e0ff', fontWeight: 400, fontSize: '1.13rem', opacity: 0.7, marginLeft: 10}}>
-      Operator Terminal
-    </span>
+    <span style={{color: '#98e1ff', fontWeight: 500, fontSize: '1.07rem', opacity: 0.76, marginLeft: 13,letterSpacing:'0.14em',textTransform:'uppercase'}}>Operator Terminal</span>
     <div style={{flex:1}}/>
-    <div style={{fontWeight: 500,letterSpacing:
-     '0.04em', color: '#b8cdf4', fontSize:'1rem',textTransform:'uppercase'}}>v1.0</div>
+    <div style={{fontWeight: 600,letterSpacing: '0.07em', color: '#bff3ff', fontSize:'1.09rem',textTransform:'uppercase'}}>v1.0</div>
   </header>
 );
 

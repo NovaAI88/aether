@@ -1,16 +1,26 @@
 import React from 'react';
-
 const intel = [
-  { msg: "AI Risk Score: Neutral", color: '#43e583' },
-  { msg: "Signal: BTC strong uptrend", color: '#66b6ff' },
-  { msg: "Liquidations up 12% (24h)", color: '#f7cf6b' }
+  { msg: "AI Risk: Neutral", color: '#38e382' },
+  { msg: "Signal: BTC uptrend", color: '#53b4f6' },
+  { msg: "Liquidations up 8% (24h)", color: '#ffe77b' }
 ];
 
 const MarketIntelPanel: React.FC = () => (
-  <div style={{ background:'#1c2432',borderRadius:12,padding:'18px 24px',color:'#f7f7fa',boxShadow:'0 1px 16px #0001',marginBottom:13 }}>
-    <div style={{fontWeight:700,fontSize:17,color:'#b0e9ce',marginBottom:8,letterSpacing:'-0.38px'}}>Market Intelligence</div>
+  <div style={{
+    background:'#192331',
+    borderRadius:11,
+    padding:'18px 17px 14px',
+    color:'#f9fbfd',
+    boxShadow:'0 1px 13px #0a254a23',
+    minWidth:180,
+    minHeight:78,
+    maxHeight:156,
+    border:'1.3px solid #263a53',
+    marginRight:2
+  }}>
+    <div style={{fontWeight:800,fontSize:15.6,color:'#62e9c4',marginBottom:5,letterSpacing:'-0.13px'}}>Intelligence</div>
     {intel.map((x,i) => (
-      <div key={i} style={{marginBottom:7,lineHeight:1.32,color:x.color,fontWeight:600}}>
+      <div key={i} style={{marginBottom:6,lineHeight:1.25,color:x.color,fontWeight:600,fontSize:15.1}}>
         {x.msg}
       </div>
     ))}

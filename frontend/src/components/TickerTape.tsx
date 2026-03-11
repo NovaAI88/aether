@@ -1,5 +1,4 @@
 import React from 'react';
-
 const coins = [
   { symbol: 'BTC/USD', price: '67,082.44', direction: '▲', color: '#ffe07f' },
   { symbol: 'ETH/USD', price: '3,584.11', direction: '▼', color: '#5ed6ff' },
@@ -11,21 +10,24 @@ const coins = [
 const TickerTape: React.FC = () => {
   return (
     <div className="ticker-tape" style={{
-      background: 'linear-gradient(90deg, #141829 75%, #151d31 100%)',
-      padding: '10px 0 10px 18px',
-      color: '#b1e6ff',
+      background: 'linear-gradient(90deg, #121829 75%, #182435 100%)',
+      padding: '10px 0 10px 24px',
+      color: '#cbeaff',
       fontWeight: 700,
-      fontSize: '1.11rem',
-      borderBottom: '1.5px solid #22365d',
+      fontSize: '1.09rem',
+      borderBottom: '1.6px solid #222d45',
       letterSpacing:'.04em',
       overflowX: 'auto',
-      whiteSpace: 'nowrap'
+      whiteSpace: 'nowrap',
+      minHeight:34,
+      fontFamily:'Roboto Mono, monospace',
+      boxShadow:'0 2px 9px #0007'
     }}>
       {coins.map((c, i) => (
-        <span key={c.symbol} style={{ marginRight: 35, color: c.color }}>
+        <span key={c.symbol} style={{ marginRight: 36, color: c.color }}>
           {c.symbol}
-          <span style={{marginLeft:9,marginRight:5,fontWeight:800,fontVariantNumeric:'tabular-nums',color:'#eafff8'}}>{c.price}</span>
-          <span style={{color: (c.direction === '▲' ? '#56ffa4' : '#ff6666'), fontWeight: 600, letterSpacing:'-0.06em',fontSize:'1.01em'}}>
+          <span style={{marginLeft:9,marginRight:5,fontWeight:800,fontVariantNumeric:'tabular-nums',color:'#f9fbff',fontSize:'1.05em'}}>{c.price}</span>
+          <span style={{color: (c.direction === '▲' ? '#56ffa4' : '#ff6666'), fontWeight: 600, letterSpacing:'-0.06em', fontSize:'1.09em'}}>
             {c.direction}
           </span>
         </span>
@@ -33,5 +35,4 @@ const TickerTape: React.FC = () => {
     </div>
   );
 };
-
 export default TickerTape;

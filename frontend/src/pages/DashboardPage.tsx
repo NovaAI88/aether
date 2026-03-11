@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import StatusCard from '../components/StatusCard';
-import PortfolioSummary from '../components/PortfolioSummary';
-import PositionTable from '../components/PositionTable';
 import ChartPanel from '../components/ChartPanel';
 import OrderBookStub from '../components/OrderBookStub';
 import TradeFlowStub from '../components/TradeFlowStub';
 import AlertPanel from '../components/AlertPanel';
-import MarketCards from '../components/MarketCards';
 import NewsPanel from '../components/NewsPanel';
 import MarketIntelPanel from '../components/MarketIntelPanel';
 import { fetchStatus, fetchPortfolio, fetchPositions } from '../api/apiClient';
@@ -34,52 +30,38 @@ const DashboardPage: React.FC = () => {
     .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div>Loading dashboard...</div>;
-  if (error) return <div style={{color:'#f95e5e',fontWeight:600}}>Error: {error}</div>;
+  if (loading) return <div style={{padding:60,color:'#7ec4ee'}}>Loading terminal…</div>;
+  if (error) return <div style={{color:'#f95e5e',fontWeight:700,padding:60}}>Error: {error}</div>;
 
   return (
     <div>
-      <h2 style={{
-        marginTop: 0,
-        marginBottom: '1.2rem',
-        fontSize: '2.11rem',
-        letterSpacing: '-1px',
-        fontWeight: 800,
-        color: '#84ebfe',
-        fontFamily: 'Inter, Segoe UI, Arial',
-        textShadow: '0 1.5px 16px #1b243844',
-        paddingLeft: 4
-      }}>Operator Dashboard</h2>
-      <MarketCards />
+      {/* Main grid w/ terminal layout */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '3.5fr 1.5fr',
+        gridTemplateColumns: 'minmax(0, 1fr) 370px',
         gap: '30px',
-        alignItems: 'flex-start',
-        width: '100%'
+        minHeight: 640,
+        width: '98vw',
+        maxWidth: 1800,
+        margin: '0 auto',
+        alignItems: 'start',
+        padding: '8px 0',
       }}>
-        {/* Main Center Terminal Column */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        {/* Center workspace: Dominant chart/panels */}
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <ChartPanel />
-          <div style={{display:'flex',gap:22}}>
+          <div style={{ display: 'flex', gap: 18, marginBottom:6, alignItems:'flex-start'}}>
             <MarketIntelPanel />
             <NewsPanel />
           </div>
-          <div style={{background:'#151d29',borderRadius:10,padding:'23px 24px 20px 24px',marginTop:12,boxShadow:'0 1px 8px #09183566'}}>
-            <StatusCard {...(status||{})} />
-            <PortfolioSummary {...(portfolio||{})} />
-            <div className="ui-card" style={{marginTop:6}}>
-              <PositionTable positions={positions} />
-            </div>
-          </div>
-        </div>
+        </section>
 
-        {/* Right column: Trading panels etc. */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+        {/* Right compact operations/info column */}
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: 13, minWidth: 310, maxWidth:390 }}>
           <OrderBookStub />
           <TradeFlowStub />
           <AlertPanel />
-        </div>
+        </aside>
       </div>
     </div>
   );
