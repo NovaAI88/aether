@@ -2,13 +2,14 @@
 import { MarketEvent } from '../../models/MarketEvent';
 
 export function getMockRawPayload() {
+  const now = Date.now();
   return {
-    exchange: 'MOCK',
-    symbol: 'BTCUSDT',
-    eventType: 'trade',
-    price: 10000 + Math.random() * 2000,
-    volume: Math.random() * 0.5,
-    timestamp: new Date().toISOString(),
-    raw: undefined,
+    e: 'trade', // eventType
+    E: now, // event time (optional, not used)
+    s: 'BTCUSDT', // symbol
+    p: (10000 + Math.random() * 2000).toFixed(2), // price
+    q: (Math.random() * 0.5).toFixed(3), // quantity
+    T: now, // trade time in ms
+    // For reference, Binance payload: https://binance-docs.github.io/apidocs/spot/en/#trade-streams
   };
 }
