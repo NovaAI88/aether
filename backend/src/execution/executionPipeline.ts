@@ -46,7 +46,15 @@ export function startExecutionPipeline(bus: EventBus): void {
       try {
         const { logExecution } = require('./executionLog');
         logExecution(result);
-      } catch (e) { /* silent fail if not present */ }
+      } catch (e) {}
+      // Stage 8: forward to portfolio ledger in PAPER_TRADING only
+      try {
+        const { recordExecution } = require('../portfolio/state/portfolioLedger');
+        const { getEngineMode, EngineMode } = require('./mode/executionMode');
+        if (getEngineMode() === EngineMode.PAPER_TRADING) {
+          recordExecution(result);
+        }
+      } catch(e) {}
       publishExecutionResult(bus, result, 'execution', envelope.correlationId);
     }
     processedRiskDecisionIds.add(decision.id);

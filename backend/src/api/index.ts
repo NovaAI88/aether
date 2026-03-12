@@ -7,6 +7,7 @@ import signalsRouter from './signals';
 import decisionsRouter from './decisions';
 import riskRouter from './risk';
 import engineRouter from './engine';
+import portfolioRouter from './portfolio';
 const app = express();
 
 app.get('/api/ping', (req, res) => res.status(200).send('pong'));
@@ -28,5 +29,6 @@ app.use('/api', signalsRouter);
 app.use('/api', decisionsRouter);
 app.use('/api', riskRouter);
 app.use('/api', engineRouter);
+app.use('/api', portfolioRouter);
 
 export default app;
