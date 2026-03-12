@@ -21,4 +21,14 @@ router.get('/engine/mode', (_req, res) => {
   }
 });
 
+// [STAGE 10] Global risk controller status
+router.get('/engine/risk', (_req, res) => {
+  try {
+    const { getStatus } = require('../risk/globalRiskController');
+    res.json(getStatus());
+  } catch {
+    res.status(500).json({ error: 'Global risk unavailable' });
+  }
+});
+
 export default router;
