@@ -1,6 +1,8 @@
 import express from 'express';
 import { getLatestPositionSnapshot } from '../portfolio/state/positionTracker';
 import { getLatestPortfolioSnapshot } from '../portfolio/state/portfolioTracker';
+import orderbookRouter from './orderbook';
+import tradesRouter from './trades';
 const app = express();
 
 app.get('/api/ping', (req, res) => res.status(200).send('pong'));
@@ -15,4 +17,8 @@ app.get('/api/portfolio', (req, res) => {
   if (snap) res.json(snap);
   else res.status(404).json({error: 'No portfolio snapshot available'});
 });
+
+app.use('/api', orderbookRouter);
+app.use('/api', tradesRouter);
+
 export default app;
