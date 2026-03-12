@@ -11,4 +11,14 @@ router.get('/engine/status', (_req, res) => {
   });
 });
 
+// [STAGE 7] Execution mode
+router.get('/engine/mode', (_req, res) => {
+  try {
+    const { getEngineMode } = require('../execution/mode/executionMode');
+    res.json({ mode: getEngineMode() });
+  } catch {
+    res.status(500).json({ error: 'Engine mode unavailable' });
+  }
+});
+
 export default router;

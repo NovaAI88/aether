@@ -22,13 +22,33 @@ export function startExecutionPipeline(bus: EventBus): void {
       producer: 'execution',
       timestamp: new Date().toISOString()
     };
-    const result = mockExchangeAdapter(request);
-    // Log execution for trade API bridging
-    try {
-      const { logExecution } = require('./executionLog');
-      logExecution(result);
-    } catch (e) { /* silent fail if not present */ }
-    publishExecutionResult(bus, result, 'execution', envelope.correlationId);
+    // Mode gating logic
+    const { getEngineMode, EngineMode } = require('./mode/executionMode');
+    const mode = getEngineMode();
+    if (mode === EngineMode.OFF) {
+      // Drop execution request
+      return;
+    }
+    let result = null;
+    if (mode === EngineMode.PAPER_TRADING) {
+      result = mockExchangeAdapter(request);
+    } else if (mode === EngineMode.LIVE_TRADING) {
+      // LIVE_TRADING not implemented yet
+      result = {
+        ...request,
+        status: 'not_implemented',
+        reason: 'LIVE_TRADING not implemented',
+        adapter: 'none',
+        timestamp: new Date().toISOString()
+      };
+    }
+    if (result) {
+      try {
+        const { logExecution } = require('./executionLog');
+        logExecution(result);
+      } catch (e) { /* silent fail if not present */ }
+      publishExecutionResult(bus, result, 'execution', envelope.correlationId);
+    }
     processedRiskDecisionIds.add(decision.id);
   });
 }
