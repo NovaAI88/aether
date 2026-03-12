@@ -4,6 +4,7 @@ export interface ExecutionRequest {
   riskDecisionId: string;
   actionCandidateId: string;
   signalId: string;
+  strategyId: string;
   symbol: string;
   side: 'buy' | 'sell';
   producer: string;

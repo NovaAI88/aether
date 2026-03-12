@@ -14,10 +14,20 @@ export function unregisterStrategy(strategy: Strategy) {
   if (idx !== -1) strategies.splice(idx, 1);
 }
 
+import { getWeight } from './weighting/strategyWeightEngine';
+
 export function generateSignals(state: ProcessedMarketState): TradeSignal[] {
   return strategies.map(strategy => {
     try {
-      return strategy.generateSignal(state);
+      const signal = strategy.generateSignal(state);
+      if (signal) {
+        const weight = getWeight(signal.strategyId);
+        // Adjust confidence by current weight (safe downstream)
+        signal.confidence = Math.max(0, Math.min(1, signal.confidence * weight));
+        if (!signal.metadata) signal.metadata = {};
+        signal.metadata.weight = weight;
+      }
+      return signal;
     } catch {
       return null;
     }

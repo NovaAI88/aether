@@ -5,6 +5,7 @@ export interface ExecutionResult {
   riskDecisionId: string;
   actionCandidateId: string;
   signalId: string;
+  strategyId: string;
   status: 'simulated' | 'rejected' | 'failed';
   reason: string;
   adapter: string;

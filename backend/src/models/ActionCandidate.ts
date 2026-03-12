@@ -7,5 +7,6 @@ export interface ActionCandidate {
   confidence: number;
   rationale: string;
   strategy: string;
+  strategyId: string;
   timestamp: string;
 }

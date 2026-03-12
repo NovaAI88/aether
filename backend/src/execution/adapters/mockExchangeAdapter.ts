@@ -9,6 +9,7 @@ export function mockExchangeAdapter(request: ExecutionRequest): ExecutionResult 
     riskDecisionId: request.riskDecisionId,
     actionCandidateId: request.actionCandidateId,
     signalId: request.signalId,
+    strategyId: request.strategyId,
     status: 'simulated',
     reason: 'Simulated execution success',
     adapter: 'mockExchangeAdapter',

@@ -3,6 +3,7 @@ export interface RiskDecision {
   id: string;
   actionCandidateId: string;
   signalId: string;
+  strategyId: string;
   approved: boolean;
   reason: string;
   producer: string;

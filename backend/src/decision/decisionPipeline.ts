@@ -8,6 +8,10 @@ export function startDecisionPipeline(bus: EventBus): void {
   bus.subscribe(EVENT_TOPICS.INTELLIGENCE_SIGNAL, envelope => {
     const signal = envelope.payload ?? envelope;
     const candidate = basicSignalEvaluator(signal);
+    // Propagate strategyId
+    if (signal && candidate) {
+      candidate.strategyId = signal.strategyId;
+    }
     // Bridge: log for API
     try { require('./state/decisionState').logDecision(candidate); } catch(e) {}
     if (candidate) {

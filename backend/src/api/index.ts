@@ -30,5 +30,7 @@ app.use('/api', decisionsRouter);
 app.use('/api', riskRouter);
 app.use('/api', engineRouter);
 app.use('/api', portfolioRouter);
+import strategiesRouter from './strategies';
+app.use('/api', strategiesRouter);
 
 export default app;

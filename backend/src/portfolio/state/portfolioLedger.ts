@@ -8,8 +8,11 @@ const positions: Record<string, { qty: number; avgEntry: number }> = {};
 const trades: any[] = [];
 let realizedPnL = 0;
 
+import { recordTrade } from '../../../intelligence/performance/strategyPerformanceTracker';
+
 export function recordExecution(exec: ExecutionResult) {
   if (!exec || exec.status !== 'simulated') return;
+  try { recordTrade(exec); } catch {}
   const symbol = exec.symbol || 'BTCUSDT';
   const qty = exec.side === 'buy' ? 1 : -1;
   const price = Number(exec.price || exec.fillPrice || exec.avgPrice || 0);

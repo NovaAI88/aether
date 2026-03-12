@@ -17,6 +17,7 @@ export function startExecutionPipeline(bus: EventBus): void {
       riskDecisionId: decision.id,
       actionCandidateId: decision.actionCandidateId,
       signalId: decision.signalId,
+      strategyId: decision.strategyId,
       symbol: decision.symbol || 'BTCUSDT', // fallback, required
       side: decision.side || 'buy', // fallback, required
       producer: 'execution',

@@ -6,5 +6,6 @@ export interface TradeSignal {
   confidence: number; // 0..1
   rationale: string;
   timestamp: string;
+  strategyId: string;
   baseState: any; // ProcessedMarketState reference
 }

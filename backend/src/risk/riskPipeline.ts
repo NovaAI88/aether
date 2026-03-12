@@ -20,6 +20,10 @@ export function startRiskPipeline(bus: EventBus): void {
       return;
     }
     const decision = basicRiskEvaluator(candidate, duplicate);
+    // Propagate strategyId
+    if (candidate && decision) {
+      decision.strategyId = candidate.strategyId;
+    }
     // Bridge: log for API
     try { require('./state/riskState').logRisk(decision); } catch(e) {}
     publishRiskDecision(bus, decision, 'risk', envelope.correlationId);

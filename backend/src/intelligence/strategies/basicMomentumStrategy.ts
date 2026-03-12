@@ -19,6 +19,7 @@ const strategy: Strategy = {
       confidence: 0.7,
       rationale: 'Basic momentum: price vs movingAvg',
       timestamp: new Date().toISOString(),
+      strategyId: 'momentum',
       baseState: state
     };
   }
