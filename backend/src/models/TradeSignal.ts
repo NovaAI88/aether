@@ -7,5 +7,6 @@ export interface TradeSignal {
   rationale: string;
   timestamp: string;
   strategyId: string;
+  variantId?: string;
   baseState: any; // ProcessedMarketState reference
 }
