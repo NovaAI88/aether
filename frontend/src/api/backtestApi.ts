@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:3001';
+const API_BASE = 'http://localhost:3000';
 
 export async function runBacktest(variants = ['v1','v2','v3']) {
   const params = variants.join(',');
