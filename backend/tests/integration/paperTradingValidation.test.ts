@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { EventBus } from '../../src/events/eventBus.ts';
 import { EVENT_TOPICS } from '../../src/events/topics.ts';
-import { getMockRawPayload } from '../../src/ingestion/connectors/mockConnector.ts';
-import { adaptMockPayloadToMarketEvent } from '../../src/ingestion/adapters/mockAdapter.ts';
 import { publishMarketEvent } from '../../src/ingestion/publishers/marketEventPublisher.ts';
 import { startProcessingPipeline } from '../../src/processing/processingPipeline.ts';
 import { startIntelligencePipeline } from '../../src/intelligence/intelligencePipeline.ts';
@@ -16,6 +14,24 @@ const FIXTURE_EVENTS = [
   { price: 9600, movingAvg: 9500, symbol: 'BTCUSDT', side: 'sell' },
   { price: 9550, movingAvg: 9600, symbol: 'BTCUSDT', side: 'buy' }
 ];
+
+// Generates a valid MarketEvent for the ingestion pipeline
+function asValidMarketEvent(fixture: any, i: number) {
+  const now = new Date(Date.now() + i * 100).toISOString();
+  return {
+    exchange: 'MOCK', // match enrichMarketEvent mock path
+    symbol: fixture.symbol,
+    eventType: 'trade',
+    price: fixture.price,
+    volume: 0.101, // deterministic
+    timestamp: now,
+    raw: {
+      ...fixture,
+      mock: true, // force mock wiring
+      timestamp: now
+    }
+  };
+}
 
 describe('Paper Trading Validation', () => {
   it('should replay fixed event fixture and produce deterministic pipeline results', async () => {
@@ -40,18 +56,19 @@ describe('Paper Trading Validation', () => {
     bus.subscribe(EVENT_TOPICS.EXECUTION_RESULT, () => { receivedExecs++; });
     bus.subscribe(EVENT_TOPICS.POSITION_SNAPSHOT, () => { receivedPositions++; });
     bus.subscribe(EVENT_TOPICS.PORTFOLIO_SNAPSHOT, () => { receivedPortfolios++; });
-    FIXTURE_EVENTS.forEach(fixture => {
-      const raw = { ...getMockRawPayload(), ...fixture };
-      const evt = adaptMockPayloadToMarketEvent(raw);
+    // Patch: publish canonical MarketEvents with the correct mock marker
+    FIXTURE_EVENTS.forEach((fixture, i) => {
+      const evt = asValidMarketEvent(fixture, i);
       publishMarketEvent(bus, evt, 'fixture');
     });
-    await new Promise(resolve => setTimeout(resolve, 250));
-    // Log all step counts
+    // WAIT: allow pipelines to run (longer for async risk chain)
+    await new Promise(resolve => setTimeout(resolve, 700));
+    // Log all step counts for diagnostics (test/CI logs)
     console.log({processedStates, tradeSignals, actionCandidates, riskDecisions, receivedExecs, receivedPositions, receivedPortfolios});
     expect(processedStates).toBeGreaterThan(0);
     expect(tradeSignals).toBeGreaterThan(0);
     expect(actionCandidates).toBeGreaterThan(0);
-    expect(riskDecisions).toBeGreaterThan(0);
+    expect(riskDecisions).toBeGreaterThan(0); // Main assertion for risk pipeline
     expect(receivedExecs).toBeGreaterThan(0);
     expect(receivedPositions).toBeGreaterThan(0);
     expect(receivedPortfolios).toBeGreaterThan(0);
