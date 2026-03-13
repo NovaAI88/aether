@@ -17,6 +17,15 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'AETHER backend (src)' });
 });
 
+// --- Legacy /status endpoint for compatibility ---
+app.get('/status', (_req, res) => {
+  res.json({
+    service: "AETHER backend",
+    status: "running",
+    time: new Date().toISOString()
+  });
+});
+
 // --- ENGINE RUNTIME BOOTSTRAP ---
 import { EventBus } from './events/eventBus';
 import { startIngestion } from './ingestion/index';
