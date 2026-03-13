@@ -20,6 +20,7 @@ export function startExecutionPipeline(bus: EventBus): void {
       strategyId: decision.strategyId,
       symbol: decision.symbol || 'BTCUSDT', // fallback, required
       side: decision.side || 'buy', // fallback, required
+      price: decision.price, // propagate price (ensure upstream includes price)
       producer: 'execution',
       timestamp: new Date().toISOString()
     };

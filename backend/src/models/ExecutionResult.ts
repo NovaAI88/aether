@@ -6,6 +6,7 @@ export interface ExecutionResult {
   actionCandidateId: string;
   signalId: string;
   strategyId: string;
+  price: number; // NEW FIELD: propagated price of execution
   status: 'simulated' | 'rejected' | 'failed';
   reason: string;
   adapter: string;

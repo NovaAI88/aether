@@ -10,6 +10,7 @@ export function mockExchangeAdapter(request: ExecutionRequest): ExecutionResult 
     actionCandidateId: request.actionCandidateId,
     signalId: request.signalId,
     strategyId: request.strategyId,
+    price: request.price, // propagate from request, do not invent a price
     status: 'simulated',
     reason: 'Simulated execution success',
     adapter: 'mockExchangeAdapter',

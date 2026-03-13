@@ -7,6 +7,7 @@ export interface ExecutionRequest {
   strategyId: string;
   symbol: string;
   side: 'buy' | 'sell';
+  price: number; // NEW FIELD: market or simulated price for execution
   producer: string;
   timestamp: string;
 }
