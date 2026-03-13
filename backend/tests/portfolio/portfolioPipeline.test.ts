@@ -1,15 +1,16 @@
 // Portfolio Pipeline Test: ExecutionResult → Portfolio/Position Snapshot (dedup logic)
 import { EventBus } from '../../src/events/eventBus';
-import { EVENT_TOPICS } from '../../../src/events/topics';
-import { getMockRawPayload } from '../../../src/ingestion/connectors/mockConnector';
-import { adaptMockPayloadToMarketEvent } from '../../../src/ingestion/adapters/mockAdapter';
-import { publishMarketEvent } from '../../../src/ingestion/publishers/marketEventPublisher';
-import { startProcessingPipeline } from '../../../src/processing/processingPipeline';
-import { startIntelligencePipeline } from '../../../src/intelligence/intelligencePipeline';
-import { startDecisionPipeline } from '../../../src/decision/decisionPipeline';
-import { startRiskPipeline } from '../../../src/risk/riskPipeline';
-import { startExecutionPipeline } from '../../../src/execution/executionPipeline';
-import { startPortfolioPipeline } from '../../../src/portfolio/portfolioPipeline';
+import { describe, it, expect } from 'vitest';
+import { EVENT_TOPICS } from '../../src/events/topics';
+import { getMockRawPayload } from '../../src/ingestion/connectors/mockConnector';
+import { adaptMockPayloadToMarketEvent } from '../../src/ingestion/adapters/mockAdapter';
+import { publishMarketEvent } from '../../src/ingestion/publishers/marketEventPublisher';
+import { startProcessingPipeline } from '../../src/processing/processingPipeline';
+import { startIntelligencePipeline } from '../../src/intelligence/intelligencePipeline';
+import { startDecisionPipeline } from '../../src/decision/decisionPipeline';
+import { startRiskPipeline } from '../../src/risk/riskPipeline';
+import { startExecutionPipeline } from '../../src/execution/executionPipeline';
+import { startPortfolioPipeline } from '../../src/portfolio/portfolioPipeline';
 
 describe('Portfolio Pipeline', () => {
   it('should update and emit portfolio/position snapshot for unique execution', done => {

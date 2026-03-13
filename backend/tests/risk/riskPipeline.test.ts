@@ -1,13 +1,14 @@
 // Test Risk Layer: idempotency and deterministic approval
-import { EventBus } from '../../../src/events/eventBus';
-import { EVENT_TOPICS } from '../../../src/events/topics';
-import { getMockRawPayload } from '../../../src/ingestion/connectors/mockConnector';
-import { adaptMockPayloadToMarketEvent } from '../../../src/ingestion/adapters/mockAdapter';
-import { publishMarketEvent } from '../../../src/ingestion/publishers/marketEventPublisher';
-import { startProcessingPipeline } from '../../../src/processing/processingPipeline';
-import { startIntelligencePipeline } from '../../../src/intelligence/intelligencePipeline';
-import { startDecisionPipeline } from '../../../src/decision/decisionPipeline';
-import { startRiskPipeline } from '../../../src/risk/riskPipeline';
+import { EventBus } from '../../src/events/eventBus';
+import { describe, it, expect } from 'vitest';
+import { EVENT_TOPICS } from '../../src/events/topics';
+import { getMockRawPayload } from '../../src/ingestion/connectors/mockConnector';
+import { adaptMockPayloadToMarketEvent } from '../../src/ingestion/adapters/mockAdapter';
+import { publishMarketEvent } from '../../src/ingestion/publishers/marketEventPublisher';
+import { startProcessingPipeline } from '../../src/processing/processingPipeline';
+import { startIntelligencePipeline } from '../../src/intelligence/intelligencePipeline';
+import { startDecisionPipeline } from '../../src/decision/decisionPipeline';
+import { startRiskPipeline } from '../../src/risk/riskPipeline';
 
 const TEST_ID = 'idempotency-test-id-123';
 

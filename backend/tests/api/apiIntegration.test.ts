@@ -1,6 +1,7 @@
 // API integration tests (Express endpoints)
 import app from '../../src/api/index';
 import request from 'supertest';
+import { describe, it, expect } from 'vitest';
 describe('API Endpoints', () => {
   it('should respond to GET /api/ping', async () => {
     const res = await request(app).get('/api/ping');
