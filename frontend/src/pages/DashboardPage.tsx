@@ -5,6 +5,9 @@ import TradeFlowStub from '../components/TradeFlowStub';
 import AlertPanel from '../components/AlertPanel';
 import NewsPanel from '../components/NewsPanel';
 import MarketIntelPanel from '../components/MarketIntelPanel';
+import StrategyPerformanceTable from '../components/StrategyPerformanceTable';
+import StrategyWeightsPanel from '../components/StrategyWeightsPanel';
+import EngineStatusPanel from '../components/EngineStatusPanel';
 import { fetchStatus, fetchPortfolio, fetchPositions } from '../api/apiClient';
 
 const DashboardPage: React.FC = () => {
@@ -21,13 +24,13 @@ const DashboardPage: React.FC = () => {
       fetchPortfolio().catch(() => null),
       fetchPositions().catch(() => [])
     ])
-    .then(([statusResp, portfolioResp, positionsResp]) => {
-      setStatus(statusResp);
-      setPortfolio(portfolioResp);
-      setPositions(positionsResp || []);
-    })
-    .catch((err) => setError(String(err)))
-    .finally(() => setLoading(false));
+      .then(([statusResp, portfolioResp, positionsResp]) => {
+        setStatus(statusResp);
+        setPortfolio(portfolioResp);
+        setPositions(positionsResp || []);
+      })
+      .catch((err) => setError(String(err)))
+      .finally(() => setLoading(false));
   }, []);
 
   if (loading) return <div style={{padding:60,color:'#7ec4ee'}}>Loading terminal…</div>;
@@ -38,7 +41,7 @@ const DashboardPage: React.FC = () => {
       {/* Main grid w/ terminal layout */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'minmax(0, 1fr) 370px',
+        gridTemplateColumns: 'minmax(0, 1fr) 390px',
         gap: '30px',
         minHeight: 640,
         width: '98vw',
@@ -50,6 +53,9 @@ const DashboardPage: React.FC = () => {
         {/* Center workspace: Dominant chart/panels */}
         <section style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <ChartPanel />
+          {/* Additive new panels below */}
+          <StrategyPerformanceTable />
+          <StrategyWeightsPanel />
           <div style={{ display: 'flex', gap: 18, marginBottom:6, alignItems:'flex-start'}}>
             <MarketIntelPanel />
             <NewsPanel />
@@ -57,10 +63,11 @@ const DashboardPage: React.FC = () => {
         </section>
 
         {/* Right compact operations/info column */}
-        <aside style={{ display: 'flex', flexDirection: 'column', gap: 13, minWidth: 310, maxWidth:390 }}>
+        <aside style={{ display: 'flex', flexDirection: 'column', gap: 13, minWidth: 310, maxWidth:420 }}>
           <OrderBookStub />
           <TradeFlowStub />
           <AlertPanel />
+          <EngineStatusPanel />
         </aside>
       </div>
     </div>
