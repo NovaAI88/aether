@@ -14,7 +14,7 @@ const TradeFlowStub: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const resp = await fetch('http://localhost:3000/api/trades');
+      const resp = await fetch('http://localhost:3001/api/trades');
       if (!resp.ok) throw new Error('Failed to fetch trades');
       const d = await resp.json();
       setTrades(d);
@@ -36,9 +36,9 @@ const TradeFlowStub: React.FC = () => {
       {loading ? (
         <div style={{ color: '#abc' }}>Loading…</div>
       ) : error ? (
-        <div style={{ color: '#f95e5e'}}>{error}</div>
+        <div style={{ color: '#ffeeb3',fontWeight:600}}>Trade Flow feed not yet implemented.</div>
       ) : trades.length === 0 ? (
-        <div style={{ color: '#ffeeb3' }}>No recent trades</div>
+        <div style={{ color: '#ffeeb3',fontWeight:600 }}>No recent trades</div>
       ) : (
         trades.map((row, i) => (
           <div key={i} style={{fontSize:14.2, fontWeight:600, color: clr(row.side), display:'flex', gap:18}}>
