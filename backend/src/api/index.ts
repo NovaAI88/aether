@@ -33,4 +33,7 @@ app.use('/api', portfolioRouter);
 import strategiesRouter from './strategies';
 app.use('/api', strategiesRouter);
 
+import backtestRouter from './backtest';
+app.use('/api/backtest', backtestRouter);
+
 export default app;

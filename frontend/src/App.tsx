@@ -10,6 +10,7 @@ import TechnicalAnalysisPage from './pages/TechnicalAnalysisPage';
 import NarrativeEdgePage from './pages/NarrativeEdgePage';
 import PortfolioPage from './pages/PortfolioPage';
 import AlertsPage from './pages/AlertsPage';
+import BacktestPage from './pages/BacktestPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/narrative" element={<NarrativeEdgePage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/alerts" element={<AlertsPage />} />
+          <Route path="/backtest" element={<BacktestPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </PageLayout>

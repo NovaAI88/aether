@@ -20,7 +20,9 @@ const navLinks = [
   { label: 'Portfolio', href: '/portfolio', icon: (
     <svg width="22" height="22" fill="none"><rect x="4" y="7.5" width="14.5" height="8" rx="2.5" fill="#56ffa4" opacity=".18" stroke="#71e1c1" strokeWidth="2.3"/><rect x="7" y="10" width="8" height="4" rx="1.4" fill="#35d2b5" opacity=".7" /></svg> ) },
   { label: 'Alerts', href: '/alerts', icon: (
-    <svg width="22" height="22"><circle cx="11" cy="11" r="10" fill="#ffcea0" opacity=".08" /><path d="M11 5v4m0 5v2" stroke="#ffcea0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="11" cy="11" r="4.25" fill="#fff1e0" opacity=".19" /></svg> ) }
+    <svg width="22" height="22"><circle cx="11" cy="11" r="10" fill="#ffcea0" opacity=".08" /><path d="M11 5v4m0 5v2" stroke="#ffcea0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="11" cy="11" r="4.25" fill="#fff1e0" opacity=".19" /></svg> ) },
+  { label: 'Backtest', href: '/backtest', icon: (
+    <svg width="22" height="22" fill="none"><circle cx="11" cy="11" r="10" fill="#bbf9e9" opacity=".08" /><rect x="5" y="8" width="12" height="6" rx="2.5" fill="#12ffb1" opacity=".18" stroke="#53ffd9" strokeWidth="2.3"/><path d="M7 13l4-4 4 4" stroke="#37d7b2" strokeWidth="1.3"/></svg>) },
 ];
 
 const SidebarNav: React.FC = () => (
@@ -39,7 +41,7 @@ const SidebarNav: React.FC = () => (
   }}>
     {navLinks.map((link) => (
       <a
-        href={"#"+link.label.toLowerCase()}
+        href={link.href}
         key={link.label}
         style={{
           display: 'flex',
