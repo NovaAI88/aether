@@ -20,6 +20,7 @@ const strategy: Strategy = {
       rationale: 'Basic momentum: price vs movingAvg',
       timestamp: new Date().toISOString(),
       strategyId: 'momentum',
+      variantId: 'v1', // patched: ensure every TradeSignal for momentum has a real variantId
       baseState: state
     };
   }
