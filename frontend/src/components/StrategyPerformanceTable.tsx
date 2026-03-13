@@ -24,13 +24,13 @@ const StrategyPerformanceTable: React.FC = () => {
   }, []);
 
   if (loading) return <div style={{padding:16}}>Loading strategy performance…</div>;
-  if (error && !data.length) return <div style={{color:'#f97'}}>Error: {error}</div>;
+  if (!!error && !data.length) return <div style={{padding:14, color:'#cdbe73'}}>No performance data yet.</div>;
   if (!data.length) return <div style={{padding:16}}>No strategy performance data yet.</div>;
 
   return (
     <div style={{background:'#192742',borderRadius:12,padding:18,boxShadow:'0 1px 8px #242a2c14',marginBottom:10,minWidth:300}}>
       <div style={{fontWeight:700,fontSize:'1.25rem',color:'#8ddcff',marginBottom:16}}>Strategy Variant Performance</div>
-      {error && <div style={{color:'#f97',marginBottom:'7px'}}>Refresh error: {error}</div>}
+      {error && <div style={{color:'#d0bf70',marginBottom:'7px'}}>Refresh error: {error}</div>}
       <table style={{width:'100%',fontSize:15,background:'none',color:'#e2f6ff'}}>
         <thead>
           <tr style={{background:'#243657'}}>

@@ -44,7 +44,7 @@ const TradeFlowStub: React.FC = () => {
       {loading ? (
         <div style={{ color: '#abc' }}>Loading…</div>
       ) : trades.length === 0 ? (
-        <div style={{ color: '#ffeeb3',fontWeight:600 }}>No recent trades</div>
+        <div style={{ color: '#ffeeb3',fontWeight:600 }}>No live trades yet.</div>
       ) : (
         <>
         {trades.map((row, i) => (
@@ -55,7 +55,7 @@ const TradeFlowStub: React.FC = () => {
             <span style={{marginLeft:'auto', opacity:0.61, fontWeight:400}}>{row.time}</span>
           </div>
         ))}
-        {stale && <div style={{ color: '#f6e18d', fontSize:12, marginTop:3 }}>Data is stale / last backend fetch failed.</div>}
+        {stale && <div style={{ color: '#f6e18d', fontSize:12, marginTop:3 }}>Trade flow is stale / last backend fetch failed.</div>}
         </>
       )}
     </div>

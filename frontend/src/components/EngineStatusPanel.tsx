@@ -28,13 +28,13 @@ const EngineStatusPanel: React.FC = () => {
   }, []);
 
   if (loading) return <div style={{padding:13}}>Loading engine status…</div>;
-  if (error && !status && !risk) return <div style={{color:'#f97',padding:10}}>Error: {error}</div>;
+  if (!!error && !status && !risk) return <div style={{color:'#baa84a',padding:11}}>Engine not yet reporting status/risk.</div>;
 
   return (
     <div style={{padding:'16px 13px',background:'#202c46',borderRadius:13,marginBottom:14,boxShadow:'0 1px 8px #142a3a16',minWidth:220}}>
       <div style={{fontWeight:700,fontSize:'1.18rem',color:'#b2dafa',marginBottom:10}}>Engine Status & Risk</div>
       {error && <div style={{color:'#f97',marginBottom:7}}>Refresh error: {error}</div>}
-      {!status ? <div style={{color:'#aaa'}}>No data</div> : (
+      {!status ? <div style={{color:'#aaa'}}>No status data</div> : (
         <>
           <div><b>Status:</b> <span style={{color:status.status==='ok'||status.status==='OK'?'#59e6be':'#ffeb8a'}}>{status.status||'—'}</span></div>
           <div><b>Uptime:</b> <span>{status.uptime? Number(status.uptime).toFixed(1)+'s':''}</span></div>
@@ -43,7 +43,7 @@ const EngineStatusPanel: React.FC = () => {
       )}
       <div style={{marginTop:6,paddingTop:6,borderTop:'1px solid #344556'}}>
         <div style={{fontWeight:500,fontSize:'1.04rem',color:'#ffb8b0',marginBottom:4}}>Risk Controls</div>
-        {!risk ? <div style={{color:'#aaa'}}>No risk data</div> : (
+        {!risk ? <div style={{color:'#aab'}}>No risk data yet.</div> : (
           <>
             <div><b>Kill Switch:</b> <span style={{color:risk.killSwitch?'#ff8383':'#aeffea'}}>{risk.killSwitch? 'ACTIVE':'off'}</span></div>
             <div><b>Trading Allowed:</b> <span style={{color:risk.tradingAllowed?'#bbf8d1':'#f88'}}>{risk.tradingAllowed? 'yes':'NO'}</span></div>
