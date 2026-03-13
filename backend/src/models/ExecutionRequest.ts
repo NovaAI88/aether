@@ -7,7 +7,8 @@ export interface ExecutionRequest {
   strategyId: string;
   symbol: string;
   side: 'buy' | 'sell';
-  price: number; // NEW FIELD: market or simulated price for execution
+  price?: number; // Optional: execution price propagated from upstream
+  variantId?: string; // Optional: propagated variant identifier
   producer: string;
   timestamp: string;
 }

@@ -4,6 +4,8 @@ export interface RiskDecision {
   actionCandidateId: string;
   signalId: string;
   strategyId: string;
+  price?: number; // Optional: propagated execution price
+  variantId?: string; // Optional: propagated variant identifier
   approved: boolean;
   reason: string;
   producer: string;

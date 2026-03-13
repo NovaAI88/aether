@@ -8,9 +8,11 @@ export function startDecisionPipeline(bus: EventBus): void {
   bus.subscribe(EVENT_TOPICS.INTELLIGENCE_SIGNAL, envelope => {
     const signal = envelope.payload ?? envelope;
     const candidate = basicSignalEvaluator(signal);
-    // Propagate strategyId
+    // Propagate strategyId, price, and variantId from signal
     if (signal && candidate) {
       candidate.strategyId = signal.strategyId;
+      candidate.price = signal.baseState && typeof signal.baseState.price === 'number' ? signal.baseState.price : undefined; // Safe extraction
+      if ('variantId' in signal && typeof signal.variantId === 'string') candidate.variantId = signal.variantId;
     }
     // Bridge: log for API
     try { require('./state/decisionState').logDecision(candidate); } catch(e) {}

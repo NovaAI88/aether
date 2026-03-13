@@ -8,5 +8,7 @@ export interface ActionCandidate {
   rationale: string;
   strategy: string;
   strategyId: string;
+  price?: number; // Optional: execution price as seen at signal/decision time
+  variantId?: string; // Optional: variant identifier for attribution
   timestamp: string;
 }

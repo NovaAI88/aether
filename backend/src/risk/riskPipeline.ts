@@ -20,9 +20,11 @@ export function startRiskPipeline(bus: EventBus): void {
       return;
     }
     const decision = basicRiskEvaluator(candidate, duplicate);
-    // Propagate strategyId
+    // Propagate strategyId, price, and variantId
     if (candidate && decision) {
       decision.strategyId = candidate.strategyId;
+      decision.price = candidate.price; // Explicit field propagation
+      decision.variantId = candidate.variantId; // Explicit field propagation
     }
     // Bridge: log for API
     try { require('./state/riskState').logRisk(decision); } catch(e) {}
