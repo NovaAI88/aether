@@ -8,7 +8,7 @@ export function basicSignalGenerator(state: ProcessedMarketState): TradeSignal {
       ? 'buy'
       : state.price > (state.movingAvg || state.price)
       ? 'sell'
-      : 'hold';
+      : Math.random() < 0.5 ? 'buy' : 'sell';
   return {
     source: 'basic-signal',
     symbol: state.symbol,
