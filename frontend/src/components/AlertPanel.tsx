@@ -31,7 +31,9 @@ const AlertPanel = () => {
       <h3>Alerts</h3>
       <ul>
         {alerts.map((alert, index) => (
-          <li key={index}>{alert.message} - {alert.timestamp}</li>
+          <li key={index}>
+            [{(alert.severity ?? 'info').toUpperCase()}] {alert.source ?? 'system'}: {alert.message ?? alert.reason ?? 'No alert message'} - {alert.timestamp ?? '—'}
+          </li>
         ))}
       </ul>
     </div>

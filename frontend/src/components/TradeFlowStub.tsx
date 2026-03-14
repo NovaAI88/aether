@@ -16,7 +16,7 @@ const TradeFlowStub = () => {
     setStale(false);
     try {
       const data = await apiFetchTrades();
-      setTrades(data);
+      setTrades(Array.isArray(data) ? data : []);
     } catch (err) {
       setError('Failed to load trades');
       setStale(true);
@@ -40,7 +40,9 @@ const TradeFlowStub = () => {
       <h3>Recent Trades {stale && '(stale)'}</h3>
       <ul>
         {trades.map((trade, index) => (
-          <li key={index}>{trade.symbol} - {trade.side} at {trade.price}</li>
+          <li key={index}>
+            {trade.timestamp ?? '—'} - {trade.symbol ?? '—'} {(trade.side ?? '—').toUpperCase()} {trade.qty ?? ''} at {trade.price ?? '—'} ({trade.status ?? 'unknown'}{trade.reason ? `: ${trade.reason}` : ''})
+          </li>
         ))}
       </ul>
     </div>
