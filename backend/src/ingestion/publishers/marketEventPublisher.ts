@@ -4,7 +4,10 @@ import { EventBus } from '../../events/eventBus';
 import { EVENT_TOPICS } from '../../events/topics';
 import { EventEnvelope } from '../../events/eventEnvelope';
 
+import { addMarketPrice } from '../../market/marketPriceBuffer';
 export function publishMarketEvent(bus: EventBus, payload: MarketEvent, producer="mock", correlationId?: string): void {
+  // Add to price buffer for charting
+  addMarketPrice(payload);
   const envelope: EventEnvelope<MarketEvent> = {
     id: (Math.random() * 1e17).toString(36),
     topic: EVENT_TOPICS.MARKET_EVENT,
