@@ -14,28 +14,34 @@ const AlertPanel: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchAlerts();
+      setAlerts(Array.isArray(data) ? data : []);
+    } catch {
+      setError('No alert data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchAlerts = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await fetchAlerts();
-        setAlerts(Array.isArray(data) ? data : []);
-      } catch {
-        setError('No alert data');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAlerts();
-    const interval = setInterval(fetchAlerts, POLL_INTERVAL);
+    fetchData();
+    const interval = setInterval(fetchData, POLL_INTERVAL);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div style={{ background:'#251e29',borderRadius:11,padding:'11px 11px 9px',color:'#fffea4',boxShadow:'0 1px 10px #432e1a26',minHeight:38,border:'1.1px solid #51416b',fontSize:13.5,fontWeight:600,letterSpacing:'0.01em',fontFamily:'Inter,Roboto,Arial,sans-serif', maxHeight:164, overflowY:'auto' }}>
       <div style={{fontWeight:700, fontSize:15, color:'#fc4'}}>⚠️ Alerts</div>
-      {loading ? <span style={{color:'#bbb'}}>Loading…</span> : error ? <span style={{color:'#ffa8a8'}}>{error}</span> : (
+      {loading ? <span style={{color:'#bbb'}}>Loading…</span> : error ? (
+        <div>
+          <span style={{color:'#ffa8a8'}}>{error}</span>
+          <button onClick={fetchData} style={{marginLeft: 10, background: '#51416b', color: '#fffea4', border: 'none', padding: '4px 8px', borderRadius: 4, cursor: 'pointer'}}>Retry</button>
+        </div>
+      ) : (
         alerts.length === 0 ? <span>No alerts.</span> : (
           alerts.map((alert, i) => (
             <div key={i} style={{marginTop:4, padding:'4px 0', borderBottom:'1px solid #433b4a', color: alert.severity==='error'? '#ff8484' : alert.severity==='warning'? '#ffb970':'#f9df84'}}>
