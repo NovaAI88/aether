@@ -41,7 +41,7 @@ const AiPredictionPanel: React.FC = () => {
                 <div style={{fontWeight:600,fontSize:15.1,background:'#161b29',padding:'5.5px 15px',borderRadius:9, color:'#9ffbfa'}}>Confidence: {typeof sig.confidence === 'number' ? (sig.confidence*100).toFixed(1) + '%' : '-'}</div>
               </div>
               <div style={{marginTop:9, fontSize:14.9, color:'#d1cbfa', fontWeight:700}}>
-                Symbol: <span style={{color:'#9df',fontWeight:800}}>{sig.symbol || '-'}</span>&nbsp; <span style={{color:'#7ee9b8', marginLeft:20}}>Time: <span style={{fontWeight:400}}>{sig.timestamp ? new Date(sig.timestamp).toLocaleTimeString() : '-'}</span></span>
+                Symbol: <span style={{color:'#9df',fontWeight:800}}>{sig.symbol || '-'}</span>&nbsp; <span style={{color:'#7ee9b8', marginLeft:20}}>Time: <span style={{fontWeight:400}}>{(typeof sig.timestamp === 'string' && !isNaN(Date.parse(sig.timestamp))) ? new Date(sig.timestamp).toLocaleTimeString() : '-'}</span></span>
               </div>
               <div style={{marginTop:14,fontSize:15.5,fontWeight:600}}>
                 Entry: <span style={{color:'#99ffe3',fontWeight:800}}>-</span>&nbsp;&nbsp;

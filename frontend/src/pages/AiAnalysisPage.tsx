@@ -15,8 +15,8 @@ const AiAnalysisPage: React.FC = () => {
       .then(signals => {
         if (!mounted) return;
         const sig = signals && signals[0];
-        setConfidence(typeof sig?.confidence === 'number' ? sig.confidence : null);
-        setReasoning(sig?.rationale || '');
+        setConfidence((sig && typeof sig.confidence === 'number') ? sig.confidence : null);
+        setReasoning((sig && typeof sig.rationale === 'string') ? sig.rationale : '');
       })
       .finally(() => { if (mounted) setLoading(false); });
     return () => { mounted = false; };

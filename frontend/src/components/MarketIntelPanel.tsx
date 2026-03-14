@@ -42,14 +42,14 @@ const MarketIntelPanel: React.FC = () => {
       ) : decisions.length === 0 ? (
         <div style={{color:'#ffeeb3'}}>No recent decisions</div>
       ) : (
-        decisions.slice(0,3).map((d,i) => (
+        decisions.filter(Boolean).slice(0,3).map((d,i) => (
           <div key={i} style={{marginBottom:8,lineHeight:1.25,color:'#53b4f6',fontWeight:600,fontSize:15.1}}>
             <div>
               <span style={{color: '#36e1d3'}}>{d.strategy || 'Unnamed strategy'}</span>&nbsp;
               <span style={{color:'#7ee9b8',fontWeight:700}}>{d.variantId ? `(${d.variantId})` : ''}</span>&nbsp;
               <span style={{color:'#b2e1ff'}}>{d.side ? d.side.toUpperCase() : ''}</span>
               <span style={{color:'#8ad6ff',marginLeft:10}}>{d.symbol || ''}</span>
-              <span style={{color:'#d9bfea',marginLeft:14,fontWeight:400,fontSize:13}}>{d.timestamp ? new Date(d.timestamp).toLocaleTimeString() : ''}</span>
+              <span style={{color:'#d9bfea',marginLeft:14,fontWeight:400,fontSize:13}}>{(typeof d.timestamp === 'string' && !isNaN(Date.parse(d.timestamp))) ? new Date(d.timestamp).toLocaleTimeString() : '-'}</span>
             </div>
             <div style={{fontWeight:400,opacity:0.92,color:'#c0ecff'}}>{d.rationale || <span style={{color:'#949fc4'}}>No rationale.</span>}</div>
             <div style={{color:'#ccf', fontWeight:400, fontSize:13}}>Confidence: {typeof d.confidence === 'number' ? (d.confidence*100).toFixed(1) + '%' : '-'}</div>
