@@ -36,8 +36,8 @@ function formatPosTable(positions: PaperPosition[]|Record<string, PaperPosition>
         </tr>
       </thead>
       <tbody>
-        {rows.map((pos) => (
-          <tr key={pos.symbol} style={{borderBottom:'1.1px solid #244c56'}}>
+        {rows.map((pos, idx) => (
+          <tr key={pos.symbol + '-' + idx} style={{borderBottom:'1.1px solid #244c56'}}>
             <td>{pos.symbol}</td>
             <td>{pos.side}</td>
             <td>{pos.qty}</td>

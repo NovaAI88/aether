@@ -9,12 +9,12 @@ import StrategyPerformanceTable from '../components/StrategyPerformanceTable';
 import StrategyWeightsPanel from '../components/StrategyWeightsPanel';
 import EngineStatusPanel from '../components/EngineStatusPanel';
 import OperatorControlsPanel from '../components/OperatorControlsPanel';
-import { fetchStatus, fetchPortfolio, fetchPositions } from '../api/apiClient';
+import { fetchStatus, fetchPortfolio } from '../api/apiClient';
 
 const DashboardPage: React.FC = () => {
   const [status, setStatus] = useState<any>(null);
   const [portfolio, setPortfolio] = useState<any>(null);
-  const [positions, setPositions] = useState<any[]>([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,13 +22,11 @@ const DashboardPage: React.FC = () => {
     setLoading(true);
     Promise.all([
       fetchStatus().catch(() => null),
-      fetchPortfolio().catch(() => null),
-      fetchPositions().catch(() => [])
+      fetchPortfolio().catch(() => null)
     ])
-      .then(([statusResp, portfolioResp, positionsResp]) => {
+      .then(([statusResp, portfolioResp]) => {
         setStatus(statusResp);
         setPortfolio(portfolioResp);
-        setPositions(positionsResp || []);
       })
       .catch((err) => setError(String(err)))
       .finally(() => setLoading(false));
