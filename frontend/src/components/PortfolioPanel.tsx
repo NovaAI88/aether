@@ -60,6 +60,9 @@ type PaperPortfolio = {
   equity: number;
   pnl: number;
   positions: PaperPosition[];
+  cash?: number;
+  totalValue?: number;
+  positionsValue?: number;
 };
 
 const PortfolioPanel: React.FC = () => {
@@ -90,8 +93,9 @@ const PortfolioPanel: React.FC = () => {
     <div style={{padding:17,background:'#103a3b',borderRadius:13,marginBottom:14,boxShadow:'0 1px 8px #143d3a18',minWidth:280}}>
       <div style={{fontWeight:800,fontSize:'1.15rem',color:'#9fffd2',marginBottom:10}}>Paper Trading Portfolio</div>
       {error && <div style={{color:'#f97',marginBottom:7}}>Refresh error: {error}</div>}
-      <div><b>Balance:</b> <span style={{color:'#e2ffe8',fontWeight:600}}>${portfolio.balance?.toLocaleString()}</span></div>
-      <div><b>Equity:</b> <span style={{color:'#a1ffe8'}}>${portfolio.equity?.toLocaleString()}</span></div>
+      <div><b>Balance:</b> <span style={{color:'#e2ffe8',fontWeight:600}}>${(portfolio.cash ?? portfolio.balance)?.toLocaleString()}</span></div>
+      <div><b>Equity:</b> <span style={{color:'#a1ffe8'}}>${(portfolio.totalValue ?? portfolio.equity)?.toLocaleString()}</span></div>
+      <div><b>Positions Value:</b> <span style={{color:'#a1ffe8'}}>${portfolio.positionsValue?.toLocaleString()}</span></div>
       <div><b>Realized PnL:</b> <span style={{color:portfolio.pnl>=0?'#7affae':'#ffaeae'}}>{portfolio.pnl?.toFixed(2)}</span></div>
       <div style={{marginTop:8,marginBottom:6,fontWeight:700,color:'#77c6e8'}}>Positions</div>
       {portfolio.positions ? formatPosTable(portfolio.positions) : <span style={{color:'#ccc'}}>None</span>}
