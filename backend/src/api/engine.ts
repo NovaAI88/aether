@@ -3,11 +3,10 @@ const router = Router();
 
 router.get('/engine/status', (_req, res) => {
   res.json({
-    time: new Date().toISOString(),
-    status: 'ok',
-    uptime: process.uptime(),
-    pid: process.pid,
-    memory: process.memoryUsage()
+    mode: "paper",
+    status: "active",
+    variant: "v1",
+    uptime: process.uptime()
   });
 });
 
